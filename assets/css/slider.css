@@ -1,0 +1,115 @@
+:root {
+    --faal-slider-bg: #0f172a;
+    --faal-slider-surface: #111c34;
+    --faal-slider-text: #f8fafc;
+    --faal-slider-muted: #cbd5e1;
+    --faal-slider-accent: #22d3ee;
+    --faal-slider-radius: 20px;
+}
+
+.faal-slider {
+    position: relative;
+    background: linear-gradient(135deg, var(--faal-slider-bg), #1e293b);
+    border-radius: var(--faal-slider-radius);
+    color: var(--faal-slider-text);
+    padding: 1rem;
+    overflow: hidden;
+}
+
+.faal-slider__viewport {
+    overflow: hidden;
+    border-radius: calc(var(--faal-slider-radius) - 6px);
+    background: rgba(17, 28, 52, 0.65);
+}
+
+.faal-slider__track {
+    display: flex;
+    transition: transform 400ms ease;
+    will-change: transform;
+}
+
+.faal-slider__slide {
+    min-width: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.faal-slider__eyebrow {
+    color: var(--faal-slider-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    margin: 0 0 0.5rem;
+}
+
+.faal-slider__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 2.8vw, 2.5rem);
+    line-height: 1.2;
+}
+
+.faal-slider__description {
+    margin: 1rem 0 1.5rem;
+    color: var(--faal-slider-muted);
+    max-width: 50ch;
+}
+
+.faal-slider__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--faal-slider-accent);
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.75rem 1.25rem;
+}
+
+.faal-slider__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.faal-slider__nav {
+    border: 1px solid rgba(248, 250, 252, 0.35);
+    background: transparent;
+    color: var(--faal-slider-text);
+    border-radius: 999px;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+.faal-slider__dots {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.faal-slider__dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    border: 0;
+    background: rgba(248, 250, 252, 0.35);
+    cursor: pointer;
+}
+
+.faal-slider__dot.is-active {
+    width: 1.5rem;
+    background: var(--faal-slider-accent);
+}
+
+@media (max-width: 768px) {
+    .faal-slider__slide {
+        padding: 1.5rem;
+    }
+
+    .faal-slider__controls {
+        justify-content: center;
+    }
+}
