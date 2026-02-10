@@ -1,0 +1,35 @@
+.faal-slider-admin__rows {
+    display: grid;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.faal-slider-admin__card {
+    border: 1px solid #dcdcde;
+    border-radius: 10px;
+    padding: 16px;
+    background: #fff;
+}
+
+.faal-slider-admin__card legend {
+    font-weight: 600;
+    padding: 0 6px;
+}
+
+.faal-slider-admin__card label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.faal-slider-admin__card input,
+.faal-slider-admin__card textarea {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.faal-slider-admin__row-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+}
