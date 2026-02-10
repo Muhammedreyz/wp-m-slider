@@ -220,17 +220,29 @@ class Faal_Slider
                             data-faal-slide
                             aria-hidden="<?php echo $index === 0 ? 'false' : 'true'; ?>"
                         >
-                            <div class="faal-slider__content">
-                                <?php if (! empty($slide['eyebrow'])) : ?>
-                                    <p class="faal-slider__eyebrow"><?php echo esc_html($slide['eyebrow']); ?></p>
-                                <?php endif; ?>
-                                <h2 class="faal-slider__title"><?php echo esc_html($slide['title']); ?></h2>
-                                <p class="faal-slider__description"><?php echo esc_html($slide['description']); ?></p>
-                                <?php if (! empty($slide['button_text']) && ! empty($slide['button_url'])) : ?>
-                                    <a class="faal-slider__button" href="<?php echo esc_url($slide['button_url']); ?>">
-                                        <?php echo esc_html($slide['button_text']); ?>
-                                    </a>
-                                <?php endif; ?>
+                            <div class="faal-slider__grid">
+                                <div class="faal-slider__content">
+                                    <?php if (! empty($slide['eyebrow'])) : ?>
+                                        <p class="faal-slider__eyebrow"><?php echo esc_html($slide['eyebrow']); ?></p>
+                                    <?php endif; ?>
+                                    <h2 class="faal-slider__title"><?php echo esc_html($slide['title']); ?></h2>
+                                    <p class="faal-slider__description"><?php echo esc_html($slide['description']); ?></p>
+                                    <?php if (! empty($slide['button_text']) && ! empty($slide['button_url'])) : ?>
+                                        <a class="faal-slider__button" href="<?php echo esc_url($slide['button_url']); ?>">
+                                            <?php echo esc_html($slide['button_text']); ?>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="faal-slider__visual" aria-hidden="true">
+                                    <div class="faal-slider__mockup">
+                                        <div class="faal-slider__mockup-badge"></div>
+                                        <div class="faal-slider__mockup-line"></div>
+                                        <div class="faal-slider__mockup-line is-short"></div>
+                                        <div class="faal-slider__mockup-cards">
+                                            <span></span><span></span><span></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </article>
                     <?php endforeach; ?>
@@ -238,9 +250,16 @@ class Faal_Slider
             </div>
 
             <div class="faal-slider__controls">
-                <button class="faal-slider__nav" data-faal-prev type="button" aria-label="<?php esc_attr_e('Previous slide', 'faal-slider'); ?>">&#8592;</button>
-                <div class="faal-slider__dots" data-faal-dots role="tablist" aria-label="<?php esc_attr_e('Slide navigation', 'faal-slider'); ?>"></div>
-                <button class="faal-slider__nav" data-faal-next type="button" aria-label="<?php esc_attr_e('Next slide', 'faal-slider'); ?>">&#8594;</button>
+                <div class="faal-slider__control-buttons">
+                    <button class="faal-slider__nav" data-faal-prev type="button" aria-label="<?php esc_attr_e('Previous slide', 'faal-slider'); ?>">&#8592;</button>
+                    <button class="faal-slider__nav" data-faal-next type="button" aria-label="<?php esc_attr_e('Next slide', 'faal-slider'); ?>">&#8594;</button>
+                </div>
+                <div class="faal-slider__meta">
+                    <p class="faal-slider__count"><span data-faal-current>01</span> <span class="faal-slider__count-separator">—</span> <span data-faal-total><?php echo esc_html((string) count($slides)); ?></span></p>
+                    <div class="faal-slider__progress"><span data-faal-progress></span></div>
+                    <div class="faal-slider__dots" data-faal-dots role="tablist" aria-label="<?php esc_attr_e('Slide navigation', 'faal-slider'); ?>"></div>
+                </div>
+                <p class="faal-slider__hint"><?php esc_html_e('Aşağı Kaydır', 'faal-slider'); ?></p>
             </div>
         </section>
         <?php

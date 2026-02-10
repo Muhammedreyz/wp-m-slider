@@ -7,13 +7,23 @@
         var dotsContainer = slider.querySelector('[data-faal-dots]');
         var nextButton = slider.querySelector('[data-faal-next]');
         var prevButton = slider.querySelector('[data-faal-prev]');
+        var progressBar = slider.querySelector('[data-faal-progress]');
+        var currentEl = slider.querySelector('[data-faal-current]');
+        var totalEl = slider.querySelector('[data-faal-total]');
+
         var autoplay = slider.dataset.autoplay !== 'false';
-        var interval = parseInt(slider.dataset.interval, 10) || 5000;
+        var interval = parseInt(slider.dataset.interval || '5000', 10);
         var index = 0;
         var timer = null;
+        var progressRaf = null;
+        var startTime = null;
 
         if (!track || slides.length === 0 || !dotsContainer || !nextButton || !prevButton) {
             return;
+        }
+
+        function formatNumber(value) {
+            return String(value).padStart(2, '0');
         }
 
         function renderDots() {
@@ -32,6 +42,28 @@
             });
         }
 
+        function updateProgressByTime(time) {
+            if (!progressBar || !autoplay) {
+                return;
+            }
+
+            if (startTime === null) {
+                startTime = time;
+            }
+
+            var elapsed = time - startTime;
+            var ratio = Math.min(elapsed / interval, 1);
+            progressBar.style.width = ratio * 100 + '%';
+            progressRaf = window.requestAnimationFrame(updateProgressByTime);
+        }
+
+        function resetProgress() {
+            if (progressBar) {
+                progressBar.style.width = '0%';
+            }
+            startTime = null;
+        }
+
         function updateSlides() {
             track.style.transform = 'translateX(-' + index * 100 + '%)';
 
@@ -41,7 +73,16 @@
                 slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
             });
 
+            if (currentEl) {
+                currentEl.textContent = formatNumber(index + 1);
+            }
+
+            if (totalEl) {
+                totalEl.textContent = formatNumber(slides.length);
+            }
+
             renderDots();
+            resetProgress();
         }
 
         function goTo(newIndex) {
@@ -65,12 +106,13 @@
         }
 
         function startAutoplay() {
-            if (!autoplay) {
+            if (!autoplay || slides.length < 2) {
                 return;
             }
 
             stopAutoplay();
             timer = window.setInterval(next, interval);
+            progressRaf = window.requestAnimationFrame(updateProgressByTime);
         }
 
         function stopAutoplay() {
@@ -78,10 +120,15 @@
                 window.clearInterval(timer);
                 timer = null;
             }
+
+            if (progressRaf) {
+                window.cancelAnimationFrame(progressRaf);
+                progressRaf = null;
+            }
         }
 
         function restartAutoplay() {
-            stopAutoplay();
+            resetProgress();
             startAutoplay();
         }
 
@@ -97,6 +144,14 @@
 
         slider.addEventListener('mouseenter', stopAutoplay);
         slider.addEventListener('mouseleave', startAutoplay);
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                stopAutoplay();
+                return;
+            }
+            restartAutoplay();
+        });
 
         slider.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowRight') {
